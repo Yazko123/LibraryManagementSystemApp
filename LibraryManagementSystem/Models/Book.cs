@@ -6,7 +6,28 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystem.Models
 {
-    internal class Book
+    public class Book
     {
+        public string Title { get; set; }
+        public bool IsAvailable { get; set; }
+
+        public void BorrowBook()
+        {
+            if (IsAvailable)
+            {
+                IsAvailable = false;
+                Console.WriteLine("Book borrowed successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Book is not available.");
+            }
+        }
+
+        public void ReturnBook()
+        {
+            IsAvailable = true;
+            Console.WriteLine("Book returned.");
+        }
     }
 }
