@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Interfaces
 {
-    internal class IMemberService
+    public interface IMemberService
     {
+        Task<List<Member>> GetAllAsync();
+        Task<Member> GetByIdAsync(int id);
+
+        Task RegisterAsync(Member member);
+        Task UpdateAsync(Member member);
+
+        Task<bool> CanBorrowAsync(int memberId);
+        Task<int> GetActiveLoansCountAsync(int memberId);
     }
 }

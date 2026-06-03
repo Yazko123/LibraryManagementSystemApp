@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementSystem.Enums
+﻿namespace LibraryManagementSystem.Enums
 {
-    internal class Genre
+    public enum Genre
     {
+        Fantasy,
+        Horror,
+        Romance,
+        Drama,
+        Science,
+        Programming,
+        History,
+        Biography
     }
 }

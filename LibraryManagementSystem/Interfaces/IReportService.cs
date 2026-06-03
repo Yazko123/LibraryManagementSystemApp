@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementSystem.Interfaces
+﻿namespace LibraryManagementSystem.Interfaces
 {
-    internal class IReportService
+    public interface IReportService
     {
+        Task<int> GetMostBorrowedBooksCountAsync();
+        Task<List<string>> GetMostBorrowedBooksAsync();
+
+        Task<int> GetTotalActiveLoansAsync();
+        Task<int> GetOverdueLoansCountAsync();
+
+        Task<Dictionary<string, int>> GetLoansByGenreReportAsync();
     }
 }

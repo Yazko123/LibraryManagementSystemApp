@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementSystem.Enums
+﻿namespace LibraryManagementSystem.Enums
 {
-    internal class ReservationStatus
+    public enum ReservationStatus
     {
+        Active,
+        Cancelled,
+        Expired
     }
 }
