@@ -1,11 +1,12 @@
-﻿using LibraryManagementSystem.Models;
+﻿using LibraryManagementSystem.Data;
+using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class MemberService
 {
-    private readonly LibraryContext _context;
+    private readonly LibraryDb _context;
 
-    public MemberService(LibraryContext context)
+    public MemberService(LibraryDb context)
     {
         _context = context;
     }

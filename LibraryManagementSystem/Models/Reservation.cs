@@ -12,6 +12,7 @@
 
         public DateTime ReservationDate { get; set; } = DateTime.Now;
         public DateTime ExpirationDate { get; set; } = DateTime.Now.AddDays(7);
+
         public bool IsActive { get; set; } = true;
     }
 }

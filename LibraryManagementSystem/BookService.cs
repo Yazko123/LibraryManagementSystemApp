@@ -1,11 +1,12 @@
-﻿using LibraryManagementSystem.Models;
+﻿using LibraryManagementSystem.Data;
+using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class BookService
 {
-    private readonly LibraryContext _context;
+    private readonly LibraryDb _context;
 
-    public BookService(LibraryContext context)
+    public BookService(LibraryDb context)
     {
         _context = context;
     }
@@ -35,12 +36,5 @@ public class BookService
 
         _context.Books.Remove(book);
         await _context.SaveChangesAsync();
-    }
-
-    public async Task<List<Book>> SearchByTitle(string title)
-    {
-        return await _context.Books
-            .Where(b => b.Title.Contains(title))
-            .ToListAsync();
     }
 }

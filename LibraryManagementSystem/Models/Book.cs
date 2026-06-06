@@ -11,5 +11,8 @@ namespace LibraryManagementSystem.Models
 
         public int AuthorId { get; set; }
         public Author Author { get; set; }
+
+        public List<Loan> Loans { get; set; } = new();
+        public List<Reservation> Reservations { get; set; } = new();
     }
 }

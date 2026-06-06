@@ -12,9 +12,9 @@
 
         public DateTime LoanDate { get; set; }
         public DateTime DueDate { get; set; }
+
         public bool IsReturned { get; set; }
 
-        public bool IsOverdue() =>
-            !IsReturned && DateTime.Now > DueDate;
+        public DateTime? ReturnDate { get; set; }
     }
 }

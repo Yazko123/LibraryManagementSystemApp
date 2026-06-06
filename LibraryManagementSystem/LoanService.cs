@@ -1,74 +1,48 @@
-﻿using LibraryManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using LibraryManagementSystem.Data;
+using LibraryManagementSystem.Interfaces;
+using LibraryManagementSystem.Models;
 
-public class LoanService
+namespace LibraryManagementSystem.Services
 {
-    private readonly LibraryContext _context;
-
-    public LoanService(LibraryContext context)
+    public class LoanService : ILoanService
     {
-        _context = context;
-    }
+        private readonly LibraryDb _context;
 
-    public async Task<string> CreateLoan(int bookId, int memberId)
-    {
-        var book = await _context.Books.FindAsync(bookId);
-
-        if (book == null)
-            return "Book not found";
-
-        if (!book.IsAvailable)
-            return "Book is not available";
-
-        var loan = new Loan
+        public LoanService(LibraryDb context)
         {
-            BookId = bookId,
-            MemberId = memberId,
-            LoanDate = DateTime.Now,
-            IsReturned = false
-        };
+            _context = context;
+        }
 
-        book.IsAvailable = false;
+        public bool CreateLoan(int bookId, int memberId)
+        {
+            var book = _context.Books.Find(bookId);
+            var member = _context.Members.Find(memberId);
 
-        _context.Loans.Add(loan);
-        await _context.SaveChangesAsync();
+            if (book == null || member == null)
+                return false;
 
-        return "Loan created";
-    }
+            if (!book.IsAvailable)
+                return false;
 
-    public async Task<decimal> ReturnBook(int loanId)
-    {
-        var loan = await _context.Loans
-            .Include(l => l.Book)
-            .FirstOrDefaultAsync(l => l.Id == loanId);
+            if (member.BorrowedBooksCount >= 3)
+                return false;
 
-        if (loan == null || loan.IsReturned)
-            return 0;
+            var loan = new Loan
+            {
+                BookId = bookId,
+                MemberId = memberId,
+                LoanDate = DateTime.Now,
+                DueDate = DateTime.Now.AddDays(14),
+                IsReturned = false
+            };
 
-        loan.IsReturned = true;
-        loan.ReturnDate = DateTime.Now;
+            book.IsAvailable = false;
+            member.BorrowedBooksCount++;
 
-        loan.Book.IsAvailable = true;
+            _context.Loans.Add(loan);
+            _context.SaveChanges();
 
-        int allowedDays = 14;
-        int lateDays = (loan.ReturnDate.Value - loan.LoanDate).Days - allowedDays;
-
-        decimal fine = lateDays > 0 ? lateDays * 1m : 0;
-
-        await _context.SaveChangesAsync();
-
-        return fine;
-    }
-
-    public async Task<List<Loan>> GetOverdueLoans()
-    {
-        int allowedDays = 14;
-
-        return await _context.Loans
-            .Include(l => l.Book)
-            .Include(l => l.Member)
-            .Where(l => !l.IsReturned &&
-                        EF.Functions.DateDiffDay(l.LoanDate, DateTime.Now) > allowedDays)
-            .ToListAsync();
+            return true;
+        }
     }
 }
