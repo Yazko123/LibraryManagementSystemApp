@@ -1,4 +1,6 @@
-﻿namespace LibraryManagementSystem.Models
+﻿using System;
+
+namespace LibraryManagementSystem.Models
 {
     public class Loan
     {
@@ -11,10 +13,14 @@
         public Member Member { get; set; }
 
         public DateTime LoanDate { get; set; }
+
         public DateTime DueDate { get; set; }
+
+        public DateTime? ReturnDate { get; set; }
 
         public bool IsReturned { get; set; }
 
-        public DateTime? ReturnDate { get; set; }
+        public bool IsOverdue =>
+            !IsReturned && DateTime.Now > DueDate;
     }
 }

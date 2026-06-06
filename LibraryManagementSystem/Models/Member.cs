@@ -1,17 +1,23 @@
 ﻿using System.Collections.Generic;
-namespace LibraryManagementSystem.Models
+using System.Linq;
 
+namespace LibraryManagementSystem.Models
 {
     public class Member
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
 
-        public int BorrowedBooksCount { get; set; }
-
-        public List<Loan> Loans { get; set; } = new();                                                                                                                                                                                                                                                                                                                                                                                                                    
+        public List<Loan> Loans { get; set; } = new();
         public List<Reservation> Reservations { get; set; } = new();
 
-        public bool CanBorrowBook() => BorrowedBooksCount < 3;
+        public int ActiveLoansCount =>
+            Loans?.Count(l => !l.IsReturned) ?? 0;
+
+        public bool CanBorrowBook()
+        {
+            return ActiveLoansCount < 3;
+        }
     }
 }

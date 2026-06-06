@@ -1,10 +1,10 @@
 ﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Interfaces;
 using LibraryManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Services
 {
-    public class LoanService : ILoanService
+    public class LoanService
     {
         private readonly LibraryDb _context;
 
@@ -15,16 +15,21 @@ namespace LibraryManagementSystem.Services
 
         public bool CreateLoan(int bookId, int memberId)
         {
-            var book = _context.Books.Find(bookId);
-            var member = _context.Members.Find(memberId);
+            var book = _context.Books
+                .Include(b => b.Loans)
+                .FirstOrDefault(b => b.Id == bookId);
+
+            var member = _context.Members
+                .Include(m => m.Loans)
+                .FirstOrDefault(m => m.Id == memberId);
 
             if (book == null || member == null)
                 return false;
 
-            if (!book.IsAvailable)
+            if (!member.CanBorrowBook())
                 return false;
 
-            if (member.BorrowedBooksCount >= 3)
+            if (!book.IsAvailable)
                 return false;
 
             var loan = new Loan
@@ -36,12 +41,27 @@ namespace LibraryManagementSystem.Services
                 IsReturned = false
             };
 
-            book.IsAvailable = false;
-            member.BorrowedBooksCount++;
-
             _context.Loans.Add(loan);
             _context.SaveChanges();
 
+            return true;
+        }
+
+        // ✔️ НОВО: връщане на книга
+        public bool ReturnBook(int loanId)
+        {
+            var loan = _context.Loans
+                .Include(l => l.Book)
+                .Include(l => l.Member)
+                .FirstOrDefault(l => l.Id == loanId);
+
+            if (loan == null || loan.IsReturned)
+                return false;
+
+            loan.IsReturned = true;
+            loan.ReturnDate = DateTime.Now;
+
+            _context.SaveChanges();
             return true;
         }
     }

@@ -1,8 +1,9 @@
 ﻿using LibraryManagementSystem.Data;
+using LibraryManagementSystem.Interfaces;
 using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class MemberService
+public class MemberService : IMemberService
 {
     private readonly LibraryDb _context;
 
@@ -11,30 +12,33 @@ public class MemberService
         _context = context;
     }
 
-    public async Task<List<Member>> GetAll()
+    public async Task<List<Member>> GetAllAsync()
         => await _context.Members.ToListAsync();
 
-    public async Task<Member> GetById(int id)
+    public async Task<Member> GetByIdAsync(int id)
         => await _context.Members.FindAsync(id);
 
-    public async Task Add(Member member)
+    public async Task RegisterAsync(Member member)
     {
         _context.Members.Add(member);
         await _context.SaveChangesAsync();
     }
 
-    public async Task Update(Member member)
+    public async Task UpdateAsync(Member member)
     {
         _context.Members.Update(member);
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task<bool> CanBorrowAsync(int memberId)
     {
-        var member = await _context.Members.FindAsync(id);
-        if (member == null) return;
+        var member = await _context.Members.FindAsync(memberId);
+        return member != null && member.BorrowedBooksCount < 3;
+    }
 
-        _context.Members.Remove(member);
-        await _context.SaveChangesAsync();
+    public async Task<int> GetActiveLoansCountAsync(int memberId)
+    {
+        return await _context.Loans
+            .CountAsync(l => l.MemberId == memberId && !l.IsReturned);
     }
 }

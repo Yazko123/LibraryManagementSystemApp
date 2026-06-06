@@ -1,9 +1,9 @@
-﻿using LibraryManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Data
 {
-    public class LibraryDb : IdentityDbContext<ApplicationUser>
+    public class LibraryDb : DbContext
     {
         public LibraryDb(DbContextOptions<LibraryDb> options)
             : base(options)

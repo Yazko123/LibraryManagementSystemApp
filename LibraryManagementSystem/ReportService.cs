@@ -1,6 +1,6 @@
 ﻿using LibraryManagementSystem.Data;
 using LibraryManagementSystem.Interfaces;
-
+using Microsoft.EntityFrameworkCore;
 namespace LibraryManagementSystem.Services
 {
     public class ReportService : IReportService
@@ -24,6 +24,7 @@ namespace LibraryManagementSystem.Services
         public async Task<List<string>> GetMostBorrowedBooksAsync()
         {
             return await _context.Loans
+                .Include(l => l.Book)
                 .GroupBy(l => l.Book.Title)
                 .OrderByDescending(g => g.Count())
                 .Select(g => g.Key)
