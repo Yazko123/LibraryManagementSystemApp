@@ -10,9 +10,12 @@
         public int MemberId { get; set; }
         public Member Member { get; set; }
 
+
         public DateTime ReservationDate { get; set; } = DateTime.Now;
         public DateTime ExpirationDate { get; set; } = DateTime.Now.AddDays(7);
 
         public bool IsActive { get; set; } = true;
+        public bool IsExpired =>
+    !IsActive && DateTime.Now > ExpirationDate;
     }
 }
