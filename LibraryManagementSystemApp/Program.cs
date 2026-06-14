@@ -1,26 +1,26 @@
-﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Models;
-using LibraryManagementSystem.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using LibraryManagementSystem.Data;
+using LibraryManagementSystem.UI;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((context, services) =>
+    {
+        services.AddDbContext<LibraryDb>(options =>
+            options.UseSqlServer(
+                context.Configuration.GetConnectionString("LibraryDb")));
 
-builder.Services.AddDbContext<LibraryDb>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        // services
+        services.AddScoped<BookService>();
+        services.AddScoped<MemberService>();
+        services.AddScoped<LoanService>();
+        services.AddScoped<ReservationService>();
+        services.AddScoped<FineService>();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<LibraryDb>();
+        services.AddScoped<ConsoleUI>();
+    })
+    .Build();
 
-builder.Services.AddScoped<BookService>();
-
-builder.Services.AddControllers();
-
-var app = builder.Build();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+var ui = builder.Services.GetRequiredService<ConsoleUI>();
+ui.Run();

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace LibraryManagementSystem.Models
+namespace LibraryManagementSystem.Domain.Entities
 {
     public class Member
     {

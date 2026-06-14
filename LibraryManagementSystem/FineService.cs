@@ -1,5 +1,5 @@
 ﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Models;
+using LibraryManagementSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Services

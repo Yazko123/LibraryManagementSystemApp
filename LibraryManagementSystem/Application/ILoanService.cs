@@ -1,4 +1,4 @@
-﻿namespace LibraryManagementSystem.Interfaces
+﻿namespace LibraryManagementSystem.Application   
 {
     public interface ILoanService
     {

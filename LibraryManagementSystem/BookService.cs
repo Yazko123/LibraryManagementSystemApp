@@ -1,7 +1,7 @@
 ﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Enums;
+using LibraryManagementSystem.Domain.Entities;
+using LibraryManagementSystem.Domain.Enums;
 using LibraryManagementSystem.Interfaces;
-using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class BookService : IBookService

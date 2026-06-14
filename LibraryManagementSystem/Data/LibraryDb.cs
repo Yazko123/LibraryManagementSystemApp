@@ -1,50 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
-using LibraryManagementSystem.Models;
+﻿using LibraryManagementSystem.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace LibraryManagementSystem.Data
+namespace LibraryManagementSystem;
+
+public class LibraryDbContext : DbContext
 {
-    public class LibraryDb : DbContext
+    public LibraryDbContext()
     {
-        public LibraryDb(DbContextOptions<LibraryDb> options)
-            : base(options)
+    }
+
+    public LibraryDbContext(DbContextOptions<LibraryDbContext> contextOptions)
+        : base(contextOptions)
+    {
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
         {
+            const string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=LibraryDb;Trusted_Connection=True;TrustServerCertificate=True;";
+            optionsBuilder.UseSqlServer(connectionString);
         }
+    }
 
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
-        public DbSet<Member> Members { get; set; }
-        public DbSet<Loan> Loans { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<Fine> Fines { get; set; }
+    public DbSet<Book> Books { get; set; } = null!;
+    public DbSet<Author> Authors { get; set; } = null!;
+    public DbSet<Member> Members { get; set; } = null!;
+    public DbSet<Loan> Loans { get; set; } = null!;
+    public DbSet<Reservation> Reservations { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<Book>()
-                .HasOne(b => b.Author)
-                .WithMany(a => a.Books)
-                .HasForeignKey(b => b.AuthorId);
-
-            builder.Entity<Book>()
-                .HasMany(b => b.Loans)
-                .WithOne(l => l.Book)
-                .HasForeignKey(l => l.BookId);
-
-            builder.Entity<Book>()
-                .HasMany(b => b.Reservations)
-                .WithOne(r => r.Book)
-                .HasForeignKey(r => r.BookId);
-
-            builder.Entity<Member>()
-                .HasMany(m => m.Loans)
-                .WithOne(l => l.Member)
-                .HasForeignKey(l => l.MemberId);
-
-            builder.Entity<Member>()
-                .HasMany(m => m.Reservations)
-                .WithOne(r => r.Member)
-                .HasForeignKey(r => r.MemberId);
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
     }
 }

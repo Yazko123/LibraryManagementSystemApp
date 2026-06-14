@@ -1,6 +1,6 @@
 ﻿using LibraryManagementSystem.Data;
+using LibraryManagementSystem.Domain.Entities;
 using LibraryManagementSystem.Interfaces;
-using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class MemberService : IMemberService

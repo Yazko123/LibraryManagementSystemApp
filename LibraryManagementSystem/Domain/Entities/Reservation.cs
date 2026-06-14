@@ -1,4 +1,4 @@
-﻿namespace LibraryManagementSystem.Models
+﻿namespace LibraryManagementSystem.Domain.Entities
 {
     public class Reservation
     {
