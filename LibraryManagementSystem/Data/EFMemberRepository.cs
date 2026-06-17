@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LibraryManagementSystem
 {
-    public class EfMemberRepository : IMemberRepository
+    public class EfMemberRepository : IMemberService
     {
         private readonly LibraryDbContext _db;
 
@@ -34,4 +34,4 @@ namespace LibraryManagementSystem
             throw new NotImplementedException("Member removal is not implemented.");
         }
     }
-}
+} 

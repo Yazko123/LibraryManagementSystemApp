@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using LibraryManagementSystem.Data;
 using LibraryManagementSystem.UI;
 
 var builder = Host.CreateDefaultBuilder(args)

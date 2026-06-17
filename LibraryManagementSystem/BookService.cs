@@ -4,7 +4,7 @@ using LibraryManagementSystem.Domain.Enums;
 using LibraryManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-public class BookService : IBookService
+public class BookService : 
 {
     private readonly LibraryDb _context;
 
