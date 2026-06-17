@@ -1,14 +1,13 @@
-﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Models;
+﻿using LibraryManagementSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Services
 {
     public class LoanService
     {
-        private readonly LibraryDb _context;
+        private readonly LibraryDbContext _context;
 
-        public LoanService(LibraryDb context)
+        public LoanService(LibraryDbContext context)
         {
             _context = context;
         }

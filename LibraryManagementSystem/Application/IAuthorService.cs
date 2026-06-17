@@ -3,12 +3,18 @@ using System.Collections.Generic;
 
 namespace LibraryManagementSystem.Application
 {
-    public interface IAuthorRepository
+    public interface IAuthorService
     {
-        IReadOnlyList<Author> GetAll();
-        Author GetById(int id);
-        void Add(Author author);
-        void Update(Author author);
-        void Delete(Author author);
+        Task<List<Author>> GetAllAsync();
+
+        Task<Author> GetByIdAsync(int id);
+
+        Task<List<Author>> SearchByNameAsync(string name);
+
+        Task AddAsync(Author author);
+
+        Task UpdateAsync(Author author);
+
+        Task DeleteAsync(int id);
     }
 }

@@ -1,5 +1,4 @@
-﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Domain.Entities;
+﻿using LibraryManagementSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,13 +9,12 @@ namespace LibraryManagementSystem.Services
 {
     public class ReportService
     {
-        private readonly LibraryDb _context;
+        private readonly LibraryDbContext _context;
 
-        public ReportService(LibraryDb context)
+        public ReportService(LibraryDbContext context)
         {
             _context = context;
         }
-
 
         public async Task<List<Loan>> GetOverdueLoansAsync()
         {

@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystem.Domain ;
+using LibraryManagementSystem.Domain.Entities;
 using LibraryManagementSystem.Services;
 using System;
 
@@ -102,7 +103,7 @@ namespace LibraryManagementSystem.UI
             {
                 Title = title,
                 AuthorId = authorId,
-                Genre = Enum.Parse<Enums.Genre>(genre, true)
+                Genre = Enum.Parse<Domain.Enums.Genre>(genre, true)
             };
 
             _bookService.AddBook(book);

@@ -1,18 +1,17 @@
-﻿using LibraryManagementSystem.Data;
+﻿using LibraryManagementSystem;
+using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Domain.Entities;
 using LibraryManagementSystem.Domain.Enums;
-using LibraryManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-public class BookService : 
+public class BookService : IBookService
 {
-    private readonly LibraryDb _context;
+    private readonly LibraryDbContext _context;
 
-    public BookService(LibraryDb context)
+    public BookService(LibraryDbContext context)
     {
         _context = context;
     }
-
     public async Task<List<Book>> GetAll()
         => await _context.Books.Include(b => b.Author).ToListAsync();
 

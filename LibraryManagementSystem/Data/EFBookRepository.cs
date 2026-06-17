@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace LibraryManagementSystem
 {
-    public class EfBookRepository : IBookService
+    public class EfBookRepository
     {
         private readonly LibraryDbContext _db;
 

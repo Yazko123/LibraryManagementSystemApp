@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace LibraryManagementSystem
 {
-    public class EfReservationRepository : IReservationRepository
+    public class EfReservationRepository 
     {
         private readonly LibraryDbContext _db;
 

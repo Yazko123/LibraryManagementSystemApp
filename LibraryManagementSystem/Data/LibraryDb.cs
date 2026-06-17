@@ -28,9 +28,22 @@ public class LibraryDbContext : DbContext
     public DbSet<Member> Members { get; set; } = null!;
     public DbSet<Loan> Loans { get; set; } = null!;
     public DbSet<Reservation> Reservations { get; set; } = null!;
-
+    public DbSet<Fine> Fines { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Fine>()
+            .HasOne(f => f.Member)
+            .WithMany()
+            .HasForeignKey(f => f.MemberId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Fine>()
+            .HasOne(f => f.Loan)
+            .WithMany()
+            .HasForeignKey(f => f.LoanId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
+
 }

@@ -1,18 +1,16 @@
-﻿using LibraryManagementSystem.Data;
-using LibraryManagementSystem.Domain.Entities;
+﻿using LibraryManagementSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Services
 {
     public class FineService
     {
-        private readonly LibraryDb _context;
+        private readonly LibraryDbContext _context;
 
-        public FineService(LibraryDb context)
+        public FineService(LibraryDbContext context)
         {
             _context = context;
         }
-
         public async Task<decimal> CalculateFineAsync(int loanId)
         {
             var loan = await _context.Loans.FindAsync(loanId);

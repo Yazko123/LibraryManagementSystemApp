@@ -1,15 +1,15 @@
-﻿using LibraryManagementSystem.Data;
+﻿
+using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Domain.Entities;
-using LibraryManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Services
 {
     public class AuthorService : IAuthorService
     {
-        private readonly LibraryDb _context;
+        private readonly LibraryDbContext _context;
 
-        public AuthorService(LibraryDb context)
+        public AuthorService(LibraryDbContext context)
         {
             _context = context;
         }

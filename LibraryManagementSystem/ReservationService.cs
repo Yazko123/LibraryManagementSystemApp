@@ -1,19 +1,17 @@
-﻿using LibraryManagementSystem.Data;
+﻿using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Domain.Entities;
-using LibraryManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Services
 {
     public class ReservationService : IReservationService
     {
-        private readonly LibraryDb _context;
+        private readonly LibraryDbContext _context;
 
-        public ReservationService(LibraryDb context)
+        public ReservationService(LibraryDbContext context)
         {
             _context = context;
         }
-
         public async Task<Reservation> CreateAsync(int bookId, int memberId)
         {
             var reservation = new Reservation

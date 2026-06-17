@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LibraryManagementSystem
 {
-    public class EfMemberRepository : IMemberService
+    public class EfMemberRepository 
     {
         private readonly LibraryDbContext _db;
 

@@ -1,17 +1,16 @@
-﻿using LibraryManagementSystem.Data;
+﻿using LibraryManagementSystem;
+using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Domain.Entities;
-using LibraryManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 public class MemberService : IMemberService
 {
-    private readonly LibraryDb _context;
+    private readonly LibraryDbContext _context;
 
-    public MemberService(LibraryDb context)
+    public MemberService(LibraryDbContext context)
     {
         _context = context;
     }
-
     public async Task<List<Member>> GetAllAsync()
         => await _context.Members.ToListAsync();
 
@@ -33,7 +32,7 @@ public class MemberService : IMemberService
     public async Task<bool> CanBorrowAsync(int memberId)
     {
         var member = await _context.Members.FindAsync(memberId);
-        return member != null && member.BorrowedBooksCount < 3;
+        return member != null && member.ActiveLoansCount < 3;
     }
 
     public async Task<int> GetActiveLoansCountAsync(int memberId)

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace LibraryManagementSystem
 {
-    public class EfAuthorRepository : IAuthorService
+    public class EfAuthorRepository
     {
         private readonly LibraryDbContext _db;
 
